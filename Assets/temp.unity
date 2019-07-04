@@ -1073,8 +1073,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1200673465}
   - component: {fileID: 1200673464}
-  - component: {fileID: 1200673466}
   - component: {fileID: 1200673467}
+  - component: {fileID: 1200673466}
   m_Layer: 0
   m_Name: NetManager
   m_TagString: Untagged
@@ -1110,7 +1110,7 @@ MonoBehaviour:
   m_OfflineScene: temp
   m_OnlineScene: temp
   m_SpawnPrefabs: []
-  m_CustomConfig: 0
+  m_CustomConfig: 1
   m_MaxConnections: 4
   m_ConnectionConfig:
     m_PacketSize: 1440
@@ -1152,7 +1152,7 @@ MonoBehaviour:
     m_MaxTimerTimeout: 12000
     m_MinNetSimulatorTimeout: 1
     m_MaxNetSimulatorTimeout: 12000
-  m_Channels: 
+  m_Channels: 0500000000000000
   m_UseWebSockets: 0
   m_UseSimulator: 0
   m_SimulatedLatency: 1
@@ -1204,7 +1204,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1200673463}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bb4737dc5d484e948281d0890233d14, type: 3}
+  m_Script: {fileID: 11500000, guid: aa7f7e8858e4ce64293ebfbf20055298, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_BroadcastPort: 47777
@@ -1213,9 +1213,9 @@ MonoBehaviour:
   m_BroadcastSubVersion: 1
   m_BroadcastInterval: 1000
   m_UseNetworkManager: 1
-  m_BroadcastData: NetworkManager:localhost:7777
+  m_BroadcastData: HELLO
   m_ShowGUI: 1
-  m_OffsetX: 0
+  m_OffsetX: 200
   m_OffsetY: 0
 --- !u!1 &1441114543
 GameObject:
