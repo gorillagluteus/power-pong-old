@@ -68,7 +68,7 @@ public class LocalPlayerController : NetworkBehaviour
 
         		Vector3 euler = transform.rotation.eulerAngles;
         		Vector2 secondaryAxis = OVRInput.Get(OVRInput.Axis2D.SecondaryThumbstick);
-        		euler.y += secondaryAxis.y;
+        		euler.y += secondaryAxis.x;
         		transform.rotation = Quaternion.Euler(euler);
         		transform.localRotation = Quaternion.Euler(euler);
         	}	
