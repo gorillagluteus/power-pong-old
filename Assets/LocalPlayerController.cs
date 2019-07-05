@@ -19,13 +19,12 @@ public class LocalPlayerController : NetworkBehaviour
     void Start()
     {
         pos = transform.position;
-        DEBUG = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!isLocalPlayer)
+        if(isLocalPlayer == false)
         {
         	Destroy(ovrCamRig);
         }
@@ -41,8 +40,8 @@ public class LocalPlayerController : NetworkBehaviour
         		rightEye.tag = "MainCamera";
         		rightEye.enabled = true;
         	}
-        	leftHand.localRotation = InputTracking.GetLocalRotation(Node.LeftHand);
-        	rightHand.localRotation = InputTracking.GetLocalRotation(Node.RightHand);
+        	leftHand.localRotation = InputTracking.GetLocalRotation(Node.LeftHand) * Quaternion.Euler(0, 0, 90);
+        	rightHand.localRotation = InputTracking.GetLocalRotation(Node.RightHand) * Quaternion.Euler(0, 0, -90);
         	leftHand.localPosition = InputTracking.GetLocalPosition(Node.LeftHand);
         	rightHand.localPosition = InputTracking.GetLocalPosition(Node.RightHand);
         	if(DEBUG)
