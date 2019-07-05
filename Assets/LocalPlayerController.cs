@@ -13,11 +13,13 @@ public class LocalPlayerController : NetworkBehaviour
 	public Camera leftEye;
 	public Camera rightEye;
 	public bool DEBUG;
+	private bool isDeleted;
 	Vector3 pos;
 
     // Start is called before the first frame update
     void Start()
     {
+    	isDeleted = false;
         pos = transform.position;
     }
 
@@ -27,6 +29,7 @@ public class LocalPlayerController : NetworkBehaviour
         if(isLocalPlayer == false)
         {
         	Destroy(ovrCamRig);
+        	isDeleted = true;
         }
         else
         {
