@@ -4574,7 +4574,7 @@ MonoBehaviour:
   rightHand: {fileID: 1778068562986114951}
   leftEye: {fileID: 1795654857865204201}
   rightEye: {fileID: 1793610285485866247}
-  DEBUG: 1
+  DEBUG: 0
 --- !u!1 &1778068562145906435
 GameObject:
   m_ObjectHideFlags: 0
