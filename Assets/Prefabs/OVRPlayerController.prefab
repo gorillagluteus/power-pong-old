@@ -2932,7 +2932,7 @@ GameObject:
   - component: {fileID: 1778068561554988046}
   m_Layer: 0
   m_Name: CustomHandLeft
-  m_TagString: Untagged
+  m_TagString: leftHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5508,7 +5508,7 @@ GameObject:
   - component: {fileID: 1778068562997122151}
   m_Layer: 0
   m_Name: CustomHandRight
-  m_TagString: Untagged
+  m_TagString: rightHand
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BlueHand Material
+  m_Name: Blue Hand Material
   m_Shader: {fileID: 4800000, guid: 7617c88d94e809d4ab0b18bf693b7643, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
