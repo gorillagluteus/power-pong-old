@@ -10,6 +10,7 @@ public class paddleScript : MonoBehaviour
 	public float[] rOffset2 = new float[3];	
 	public float pOffset1;
 	public float pOffset2;
+	public float impactValue;
 	
 	private string handString;
 	private GameObject hand;
@@ -79,8 +80,10 @@ public class paddleScript : MonoBehaviour
 	}
 	void OnCollisionEnter(Collision collision)
     {
-        if(collision.tag == "ball")
-        if (collision.relativeVelocity.magnitude > 2)
-            audioSource.Play();
+        if(collision.gameObject.tag == "ball")
+		{
+			collision.gameObject.GetComponent<Rigidbody>().AddForce(transform.forward * impactValue,ForceMode.Impulse);
+			//collision.gameObject.getComponent<Renderer>().material == 
+		}
     }
 }

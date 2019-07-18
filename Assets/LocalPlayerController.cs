@@ -14,6 +14,8 @@ public class LocalPlayerController : NetworkBehaviour
 	public Camera rightEye;
 	public bool DEBUG;
 	private bool isDeleted;
+	private Material redMat;
+	private Material cyMat;
 	Vector3 pos;
 
     // Start is called before the first frame update
@@ -21,8 +23,34 @@ public class LocalPlayerController : NetworkBehaviour
     {
     	isDeleted = false;
         pos = transform.position;
-    }
-
+		/*foreach(Material matt in renderer.materials)
+		{
+			if(matt.name == "redBallOutline")
+			{
+				redMat = matt;
+			}
+			if(matt.name == "cyanBallOutline")
+			{
+				cyMat = matt;
+			}
+		}*/
+	}/*
+	void OnConnectedtoServer()
+	{
+		switch(Network.connections.length)
+		{
+			case 1:
+			{
+				GetComponent<Renderer>().material = redMat;
+				break;
+			}
+			case 2:
+			{
+				GetComponent<Renderer>().material = cyMat;
+				break;
+			}
+		}
+	}*/
     // Update is called once per frame
     void Update()
     {
