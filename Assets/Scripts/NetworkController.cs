@@ -9,13 +9,15 @@ namespace Com.SmokeMonkey.PowerPong
         #region Private Serializable Fields
 		[Tooltip("The maximum number of players per room. When a room is full, it can't be joined by new players, and so new room will be created")]
 		[SerializeField]
-		private byte maxPlayersPerRoom = 4;
+		private byte maxPlayersPerRoom = 2;
 		[Tooltip("The Ui Panel to let the user enter name, connect and play")]
 		[SerializeField]
 		private GameObject controlPanel;
 		[Tooltip("The UI Label to inform the user that the connection is in progress")]
 		[SerializeField]
 		private GameObject progressLabel;
+		bool isConnecting;
+
         #endregion
 
         #region Private Fields
@@ -37,6 +39,7 @@ namespace Com.SmokeMonkey.PowerPong
             // #Critical
             // this makes sure we can use PhotonNetwork.LoadLevel() on the master client and all clients in the same room sync their level automatically
             PhotonNetwork.AutomaticallySyncScene = true;
+			GameObject.DontDestroyOnLoad(this);
         }
 
         /// <summary>
@@ -59,6 +62,8 @@ namespace Com.SmokeMonkey.PowerPong
         /// </summary>
         public void Connect()
         {
+			// keep track of the will to join a room, because when we come back from the game we will get a callback that we are connected, so we need to know what to do then
+			isConnecting = true;
 			progressLabel.SetActive(true);
 			controlPanel.SetActive(false);
             // we check if we are connected or not, we join if we are , else we initiate the connection to the server.
@@ -76,36 +81,60 @@ namespace Com.SmokeMonkey.PowerPong
 				Debug.Log("Not Connected");
             }
         }
+		#endregion
+		
+		#region MonoBehaviourPunCallbacks Callbacks
 
-    #endregion
-	
-	#region MonoBehaviourPunCallbacks Callbacks
+		public override void OnConnectedToMaster()
+		{
+			Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
+			if (isConnecting)
+			{
+				PhotonNetwork.JoinRandomRoom();
+			}
+		}
 
-	public override void OnConnectedToMaster()
-	{
-		Debug.Log("PUN Basics Tutorial/Launcher: OnConnectedToMaster() was called by PUN");
-		PhotonNetwork.JoinRandomRoom();
-	}
+		public override void OnDisconnected(DisconnectCause cause)
+		{
+			progressLabel.SetActive(false);
+			controlPanel.SetActive(true);
+			Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
+		}
+		public override void OnJoinRandomFailed(short returnCode, string message)
+		{
+			Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
 
-	public override void OnDisconnected(DisconnectCause cause)
-	{
-		progressLabel.SetActive(false);
-		controlPanel.SetActive(true);
-		Debug.LogWarningFormat("PUN Basics Tutorial/Launcher: OnDisconnected() was called by PUN with reason {0}", cause);
-	}
-	public override void OnJoinRandomFailed(short returnCode, string message)
-	{
-		Debug.Log("PUN Basics Tutorial/Launcher:OnJoinRandomFailed() was called by PUN. No random room available, so we create one.\nCalling: PhotonNetwork.CreateRoom");
+			// #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
+			PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
+		}
 
-		// #Critical: we failed to join a random room, maybe none exists or they are all full. No worries, we create a new room.
-		PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = maxPlayersPerRoom });
-	}
+		public override void OnJoinedRoom()
+		{
+			Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
+			if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+			{
+				Debug.Log("First Player Joined. Waiting for another player.");
+				PhotonNetwork.LoadLevel("Room for 2");
+								Debug.Log("aaa");
 
-	public override void OnJoinedRoom()
-	{
-		Debug.Log("PUN Basics Tutorial/Launcher: OnJoinedRoom() called by PUN. Now this client is in a room.");
-	}
-	#endregion
+
+			}
+			else if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+			{
+				Debug.Log("Second Player Joined. Loading scene.");
+				PhotonNetwork.LoadLevel("Room for 2");
+								Debug.Log("bbb");
+
+			}
+			else
+			{
+				//!!!!change this to find another room!!!!
+				Debug.Log("Too many players in this room. Disconnecting");
+				PhotonNetwork.LeaveRoom();
+				
+			}
+		}
+		#endregion
 	
     }
 }
